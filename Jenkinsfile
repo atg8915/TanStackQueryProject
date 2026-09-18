@@ -63,7 +63,7 @@ pipeline {
                 sh '''
             		mkdir -p ${APP_DIR}/nginx
 		            cp docker-compose.yml ${APP_DIR}/docker-compose.yml
-		            cp nginx/default.conf ${APP_DIR}/nginx/default.conf
+		            cp nginx.conf ${APP_DIR}/nginx/default.conf
 		            cp .env ${APP_DIR}/.env
 		            
                     cd ${APP_DIR}
