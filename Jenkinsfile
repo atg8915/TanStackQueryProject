@@ -71,7 +71,7 @@ pipeline {
                     echo "===== 최신 이미지 확인 ====="
                     docker images react-app
 
-                    echo "===== Rolling 배포 ====="
+                    echo "===== Rolling 배포 ======"
 
                     docker compose up -d \
                         --no-deps \
