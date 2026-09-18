@@ -7,7 +7,7 @@ services:
     restart: always
 
     env_file:
-    - .env
+      - .env
 	  
     environment:
       SPRING_PROFILES_ACTIVE: prod
