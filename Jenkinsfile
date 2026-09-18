@@ -4,7 +4,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "react-app:latest"
-        APP_DIR = "~/app"
+        APP_DIR = "/home/ubuntu/app"
     }
 
     stages {
@@ -61,8 +61,6 @@ pipeline {
         stage('Rolling Deploy') {
             steps {
                 sh '''
-                	mkdir -p ~/app
-            		cd ~/app
             		
                     cd ${APP_DIR}
 
