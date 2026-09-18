@@ -65,31 +65,24 @@ pipeline {
 		            cp docker-compose.yml ${APP_DIR}/docker-compose.yml
 		            cp nginx.conf ${APP_DIR}/nginx/default.conf
 		            cp .env ${APP_DIR}/.env
-		            
-                    cd ${APP_DIR}
-
-                    echo "===== 최신 이미지 확인 ====="
-                    docker images react-app
-
-                    echo "===== Rolling 배포 ======"
-
-                    docker compose up -d \
-                        --no-deps \
-                        --scale app=2
-
-                    echo "===== 컨테이너 확인 ====="
-                    docker compose ps
-
-                    echo "===== Health Check ====="
-
-                    sleep 10
-
-                    docker compose ps
-
-                    echo "===== Nginx Reload ====="
-                    docker exec nginx nginx -s reload
-
-                    echo "===== 배포 완료 ====="
+		
+		            cd ${APP_DIR}
+		
+		            echo "===== 1번 컨테이너 교체 ====="
+		            docker compose up -d --no-deps --build app-app-1
+		            sleep 15
+		
+		            echo "===== 2번 컨테이너 교체 ====="
+		            docker compose up -d --no-deps --build app-app-2
+		            sleep 15
+		
+		            echo "===== Nginx 재생성 ====="
+		            docker compose up -d --force-recreate nginx
+		
+		            echo "===== 컨테이너 확인 ====="
+		            docker compose ps
+		
+		            echo "===== 배포 완료 ====="
                 '''
             }
         }
