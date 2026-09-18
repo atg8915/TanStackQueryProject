@@ -68,19 +68,25 @@ pipeline {
 		
 		            cd ${APP_DIR}
 		
-		            echo "===== 1번 컨테이너 교체 ====="
-		            docker compose up -d --no-deps --build app-app-1
-		            sleep 15
+		            echo "===== 현재 상태 확인 ====="
+		            docker compose ps
 		
-		            echo "===== 2번 컨테이너 교체 ====="
-		            docker compose up -d --no-deps --build app-app-2
+		            echo "===== app-app-1 교체 ====="
+		            docker stop app-app-1 || true
+		            docker rm app-app-1 || true
+		            docker compose up -d --scale app=2 --no-recreate app
 		            sleep 15
+		            docker compose ps
+		
+		            echo "===== app-app-2 교체 ====="
+		            docker stop app-app-2 || true
+		            docker rm app-app-2 || true
+		            docker compose up -d --scale app=2 --no-recreate app
+		            sleep 15
+		            docker compose ps
 		
 		            echo "===== Nginx 재생성 ====="
 		            docker compose up -d --force-recreate nginx
-		
-		            echo "===== 컨테이너 확인 ====="
-		            docker compose ps
 		
 		            echo "===== 배포 완료 ====="
                 '''
