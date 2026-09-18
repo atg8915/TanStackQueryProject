@@ -61,6 +61,9 @@ pipeline {
         stage('Rolling Deploy') {
             steps {
                 sh '''
+                	mkdir -p ~/app
+            		cd ~/app
+            		
                     cd ${APP_DIR}
 
                     echo "===== 최신 이미지 확인 ====="
